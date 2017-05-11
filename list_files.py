@@ -1,3 +1,13 @@
+#!/usr/bin/env python
+
+''' Create list of all documents in a folder for analysis
+
+User this script to get a complete analysis of all files in a folder.
+The script will recursivley walk through nested folder as well.
+The output is a csv file that includes filename, path, extension and size(in bytes).
+
+'''
+
 import os
 import csv
 
@@ -20,7 +30,7 @@ with open('file-path-dump.csv', 'wb') as csvwritefile:
         for root, directories, filenames in os.walk(folder_PATH):
             for filename in filenames:
                 file_path = os.path.join(root,filename)
-                
+
                 star = []
                 star.append(file_path)
                 star.append(filename)
@@ -38,9 +48,9 @@ with open('file-path-dump.csv', 'wb') as csvwritefile:
                     star.append(statinfo.st_size)
                 except Exception:
                     pass
-                
+
                 # print os.path.join(root,filename)
 
                 print star
                 spamwriter.writerow(star)
-                # spamwriter.writerow(star)             
+                # spamwriter.writerow(star)
