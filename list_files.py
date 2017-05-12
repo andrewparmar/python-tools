@@ -7,23 +7,26 @@ The script will recursivley walk through nested folder as well.
 The output is a csv file that includes filename, path, extension and size(in bytes).
 
 '''
-
 import os
 import csv
 
-# folders = ['ConnectPort X4','ConnectPort X2E','WVA','']
-# folders = ['ConnectPort X2e','ConnectPort X4','WVA','Connect Sensor','ConnectPort X2','XTrack','XBee Sensor','TC63i']
-folders = ['']
+PATH = "C:\Users\Andrew\Google Drive\_Archive"
+
+# If you want to limit the scope to a specifc folders in a parent folder, list
+# folder using the list below. See example
+# folders = ['documents','pcitures','audio','video/my_videos']
+folders_scope = ['']
 
 
 with open('file-path-dump.csv', 'wb') as csvwritefile:
     spamwriter = csv.writer(csvwritefile, delimiter='|',quotechar='"', quoting=csv.QUOTE_MINIMAL)
     spamwriter.writerow(['Path|Filename|'])
 
-    for folder_name in folders:
+    for folder_name in folders_scope:
 
-        PATH = "C:\Users\Andrew\Box Sync\DIGI-ONRULE"
-        # folder_PATH = PATH + folder_name + '/'
+
+        folder_PATH = PATH + folder_name + '\''      #Commnet out for Unix-based systems
+        # folder_PATH = PATH + folder_name + '/'      # Comment out for Windows systems
         folder_PATH = PATH
 
         # for root, directories, filenames in os.walk('C:/Users/andrew/Box Sync/DIGI-ONRULE/ConnectPort X4/'):
