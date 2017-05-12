@@ -7,6 +7,10 @@ The script will recursivley walk through nested folder as well.
 The output is a csv file that includes filename, path, extension and size(in bytes).
 
 '''
+__author__ = "Andrew Parmar"
+__version__ = "1.0"
+__email__ = "andrew.parmar@gmail.com"
+
 import os
 import csv
 
