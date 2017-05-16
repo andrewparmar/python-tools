@@ -1,0 +1,4 @@
+Applicant NameGrantee CodeApplicant CountryBelkin Electronics (Changzhou) Co., Ltd.
+XJIChinaBelkin Components
+ORMUnited StatesBelkin International, Inc.
+K7SUnited States
