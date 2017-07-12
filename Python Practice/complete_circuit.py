@@ -21,11 +21,21 @@ class BinaryGate(LogicGate):
         self.pinB = None
 
     def getPinA(self):
-        return int(input("Enter Pin A input for gate "+self.getLabel()+"-->"))
+        if self.pinA == None:
+            return int(input("Enter Pin A input for gate "+self.getLabel()+"-->"))
+        else:
+            return self.pinA.getFrom().getOutput()
 
     def getPinB(self):
         return int(input("Enter Pin B input for gate "+self.getLabel()+"-->"))
 
+    def setNextPin(self,source):
+        if self.pinA == None:
+            self.pinA = source
+        elif self.pinB == None:
+            self.pinB = source
+        else:
+            raise RuntimeError("Error: No Empty Pins")
 
 class UnaryGate(LogicGate):
 
@@ -35,7 +45,16 @@ class UnaryGate(LogicGate):
         self.pin = None
         
     def getPin(self):
-        return int(input("Enter Pin input for gate "+self.getLabel()+"-->"))
+        if self.pin == None:
+            return int(input("Enter Pin input for gate "+self.getLabel()+"-->"))
+        else:
+            return self.pin.getFrom().getOutput()
+
+    def setNextPin(self,source):
+        if self.pin == None:
+            self.pin = source
+        else:
+            raise RuntimeError("Error: No Empty Pins")
 
 class AndGate(BinaryGate):
 
@@ -79,7 +98,42 @@ class XOrGate(BinaryGate):
         else:
             return 0
 
-a = AndGate("G1")
-b = OrGate("G2")
+class NorGate(UnaryGate):
 
-print a, b
+    def __init__(self,name):
+        UnaryGate.__init__(self,name)
+
+    def performGateLogic(self):
+
+        a = self.getPin()
+        if a == 0:
+            return 1
+        else:
+            return 0
+
+class Connector:
+
+    def __init__(self, fgate, tgate):
+        self.fromgate = fgate
+        self.togate = tgate
+
+        tgate.setNextPin(self)
+
+    def getFrom(self):
+        return self.fromgate
+
+    def getTo(self):
+        return self.togate
+
+
+    
+             
+def main():
+    
+    a = AndGate("G1")
+    b = NorGate("G2")
+    connector = Connector(a,b)
+    x = b.getOutput()
+    print "Outout of NorGate is ", x
+
+main()
