@@ -1,8 +1,6 @@
 import random
 from pythonds.basic.queue import Queue
 
-counter = 0
-
 class Printer:
 
 	def __init__(self, ppm):
@@ -34,7 +32,7 @@ class Task:
 
 	def __init__(self, time):
 		self.timestamp = time
-		self.pages = random.randrange(1,20)
+		self.pages = random.randrange(1,21)
 
 	def gerStamp(self):
 		return self.timestamp
@@ -52,35 +50,31 @@ def simulation(num_seconds, pages_per_minute):
 	print_queue = Queue()
 	waiting_times = []
 
+
 	for current_second in range(num_seconds):
 
 		# check if new task is generated
-		if new_print_task():
+		if new_print_task():	
 			task = Task(current_second)
 			print_queue.enqueue(task)
 
 		# feed queue to printer
 		if (not labprinter.busy()) and (not print_queue.isEmpty()):
-			nexttask = print_queue.dequeue()
+			nexttask = print_queue.deque()
+			waiting_times.append(nexttask.waitTime(current_second))
 			labprinter.startNext(nexttask)
-			waiting_times.append(nexttask.waitTime(current_second)+labprinter.time_remaining)
-			# waiting_times.append(nexttask.waitTime(current_second))
 
 		labprinter.tick()
 
 	average_wait = sum(waiting_times)/len(waiting_times)
-	print("The average wait time is %.2f and tasks pending is %i" % (average_wait,print_queue.size()	)	)
+	print("The average wait time is %f" % average_wait	)
 
 
 def new_print_task():
     num = random.randrange(1,181)
     if num == 180:
-        # global counter
-        # counter = counter +1
-        # print(counter)
         return True
     else:
         return False
 
-for i in range(0,10):
-	simulation(3600,10)
+simulation(3600,10)
